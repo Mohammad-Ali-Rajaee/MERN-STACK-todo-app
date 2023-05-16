@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: "exo";
+  font-weight: 100;
+  src: url(./font/Exo-Thin.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 200;
+  src: url(./font/Exo-ExtraLight.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 300;
+  src: url(./font/Exo-Light.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 400;
+  src: url(./font/Exo-Regular.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 500;
+  src: url(./font/Exo-Medium.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 600;
+  src: url(./font/Exo-SemiBold.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 700;
+  src: url(./font/Exo-Bold.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 800;
+  src: url(./font/Exo-ExtraBold.ttf);
+}
+@font-face {
+  font-family: "exo";
+  font-weight: 900;
+  src: url(./font/Exo-Black.ttf);
+}
+.main_container {
+  font-family: "exo";
+  overflow-y: auto;
+}
+.main_container::-webkit-scrollbar {
+  display: none;
+}
+
+.p-todos {
+  overflow-y: auto;
+  height: auto;
+}
+.p-todos::-webkit-scrollbar {
+  width: 8px;
+  cursor: pointer;
+}
+.p-todos::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px black;
+  border-radius: 50rem;
+}
+.p-todos::-webkit-scrollbar-thumb {
+  outline: 1px solid black;
+  border-radius: 50rem;
+}
+
+button {
+  transition: all 0.3s;
+}
+
+.bg {
+  filter: blur(10px);
+}
+
+.add-member {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  visibility: hidden;
+  opacity: 0;
+}
+.add-member.active {
+  visibility: visible;
+  opacity: 1;
+  top: 50%;
+}/*# sourceMappingURL=style.css.map */

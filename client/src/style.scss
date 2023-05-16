@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./font";
+
+.main_container {
+  font-family: "exo";
+  overflow-y: auto;
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
+
+.p-todos {
+  overflow-y: auto;
+  height: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px black;
+    border-radius: 50rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    outline: 1px solid black;
+    border-radius: 50rem;
+  }
+}
+button {
+  transition: all 0.3s;
+}
+.bg {
+  filter: blur(10px);
+}
+.add-member {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s;
+  visibility: hidden;
+  opacity: 0;
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    top: 50%;
+  }
+}
