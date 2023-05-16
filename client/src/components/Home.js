@@ -3,14 +3,14 @@ import {
   EditRectangle,
   RemoveRectangle,
 } from "react-huge-icons/outline";
-import { useContext, useEffect, useState } from "react";
-import todoContext, { useCollectionState } from "../context/todoContext";
+import { useEffect, useState } from "react";
+import { useCollectionState } from "../context/todoContext";
 import { getTodoById, updateTodo } from "../Api/apiHandler";
 
 const Home = () => {
-  const { state, fetchAll, createTodo, removeTodo, editTodo, todoDispatch } =
+  const { state, fetchAll, createTodo, removeTodo, todoDispatch } =
     useCollectionState();
-  const { isLoading, err, todos } = state;
+  const { isLoading, todos } = state;
 
   useEffect(() => {
     fetchAll();
