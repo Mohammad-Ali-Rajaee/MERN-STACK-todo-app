@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseLink = "http://localhost:5000";
+const baseLink = "https://backend-mern-koaz.onrender.com";
 const baseApi = axios.create({
   baseURL: baseLink,
   headers: {
