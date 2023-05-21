@@ -1,2 +1,6 @@
 /node_modules
 # /.env
+
+# MANGO_URI=mongodb+srv://muali_0:<password>@todocluster.xcfordt.mongodb.net/
+# MONGO_URI=mongodb+srv://muali_0:tezbF81ezQx0dcz0@todocluster.xcfordt.mongodb.net/todoApp
+# mongodb+srv://muali_0:tezbF81ezQx0dcz0@todocluster.xcfordt.mongodb.net/?retryWrites=true&w=majority

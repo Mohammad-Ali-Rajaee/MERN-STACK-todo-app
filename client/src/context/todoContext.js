@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useReducer,
-} from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 import {
   addTodo,
   deleteTodo,
@@ -74,12 +69,13 @@ const todoReducer = (state, action) => {
   }
 };
 export const TodoContextProvider = ({ children }) => {
-  const createTodo = async (newTodo) => {
+  const createTodo = async ({ title, complete }) => {
     try {
       todoDispatch({
         type: "LOADING",
       });
-      const temp = await addTodo(newTodo);
+      const accessToken = localStorage.getItem("accessToken");
+      const temp = await addTodo({ title, complete, accessToken });
       todoDispatch({
         type: "CREATE_TODO",
         payload: temp,
@@ -97,7 +93,8 @@ export const TodoContextProvider = ({ children }) => {
       todoDispatch({
         type: "LOADING",
       });
-      const res = await getAllTodos();
+      const accessToken = localStorage.getItem("accessToken");
+      const res = await getAllTodos(accessToken);
       todoDispatch({
         type: "SET_ALL_TODOS",
         payload: res,

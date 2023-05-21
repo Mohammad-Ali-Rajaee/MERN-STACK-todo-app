@@ -4,10 +4,12 @@ import {
   RemoveRectangle,
 } from "react-huge-icons/outline";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCollectionState } from "../context/todoContext";
 import { getTodoById, updateTodo } from "../Api/apiHandler";
 
 const Home = () => {
+  const navigator = useNavigate();
   const { state, fetchAll, createTodo, removeTodo, todoDispatch } =
     useCollectionState();
   const { isLoading, todos } = state;
@@ -19,7 +21,6 @@ const Home = () => {
   useEffect(() => {
     console.log(todos);
   }, [todos]);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editing, setEditing] = useState({
     title: "",
@@ -40,7 +41,6 @@ const Home = () => {
       type: "UPDATE",
       payload: temp,
     });
-    // editTodo({ _id, title, complete });
     setIsEditing(false);
     setEditing({
       title: "",
@@ -77,6 +77,11 @@ const Home = () => {
     setSearch(e.target.value);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("accessToken");
+    navigator("/api/auth/login");
+  };
+
   return (
     <main>
       <div
@@ -94,7 +99,7 @@ const Home = () => {
           <h4 className="font-semibold text-white">Welcome Aiony Haust</h4>
           <button
             className="font-semibold text-primary bg-white rounded-md py-1 px-3"
-            // onClick={logoutHandler}
+            onClick={logoutHandler}
           >
             Logout
           </button>

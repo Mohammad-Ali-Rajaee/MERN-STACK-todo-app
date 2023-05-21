@@ -1,15 +1,49 @@
 import axios from "axios";
-const baseLink = "https://backend-mern-koaz.onrender.com";
-const baseApi = axios.create({
-  baseURL: baseLink,
+// const baseLink = "https://backend-mern-koaz.onrender.com";
+const appLink = "http://localhost:5050/app/todos";
+const apiLink = "http://localhost:5050/api/auth";
+const appUrl = axios.create({
+  baseURL: appLink,
+  headers: {
+    "Content-Type": "Application/json",
+  },
+});
+const apiUrl = axios.create({
+  baseURL: apiLink,
   headers: {
     "Content-Type": "Application/json",
   },
 });
 
+const registerHandler = async ({ name, email, password }) => {
+  try {
+    const response = await apiUrl.post("/register", {
+      name: name,
+      email: email,
+      password: password,
+    });
+    return response.data;
+  } catch ({ response }) {
+    return response.data;
+    // return response.data;
+  }
+};
+
+const loginHandler = async ({ email, password }) => {
+  try {
+    const response = await apiUrl.post("/login", {
+      email: email,
+      password: password,
+    });
+    return response.data;
+  } catch ({ response }) {
+    return response.data;
+  }
+};
+
 const deleteTodo = async (id) => {
   try {
-    const result = await baseApi.delete(`/delete/${id}`);
+    const result = await appUrl.delete(`/delete/${id}`);
     return result.data;
   } catch ({ message }) {
     console.log(message);
@@ -19,7 +53,7 @@ const deleteTodo = async (id) => {
 
 const updateTodo = async (id, newData) => {
   try {
-    const result = await baseApi.patch(`/update/${id}`, newData);
+    const result = await appUrl.patch(`/update/${id}`, newData);
     return result.data;
   } catch ({ message }) {
     console.log(message);
@@ -29,7 +63,7 @@ const updateTodo = async (id, newData) => {
 
 const getTodoById = async (id) => {
   try {
-    const result = await baseApi.get(`/${id}`);
+    const result = await appUrl.get(`/${id}`);
     return result.data;
   } catch ({ message }) {
     console.log(message);
@@ -37,24 +71,47 @@ const getTodoById = async (id) => {
   }
 };
 
-const getAllTodos = async () => {
+const getAllTodos = async (accessToken) => {
   try {
-    const result = await baseApi.get(`/`);
-    return result.data;
-  } catch ({ message }) {
-    console.log(message);
-    return message;
+    const response = await appUrl.get("/home", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
-const addTodo = async (newTodo) => {
+const addTodo = async ({ title, complete, accessToken }) => {
   try {
-    const result = await baseApi.post(`/add`, newTodo);
-    return result.data;
-  } catch ({ message }) {
-    console.log(message);
-    return message;
+    const response = await appUrl.post(
+      "/add",
+      {
+        title,
+        complete,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error;
   }
 };
 
-export { getAllTodos, getTodoById, deleteTodo, updateTodo, addTodo };
+export {
+  getAllTodos,
+  getTodoById,
+  deleteTodo,
+  updateTodo,
+  addTodo,
+  registerHandler,
+  loginHandler,
+};

@@ -75,6 +75,10 @@ button {
   transition: all 0.3s;
 }
 
+.register {
+  background-color: linear-gradient(to bottom right, #2f49a6, white);
+}
+
 .bg {
   filter: blur(10px);
 }

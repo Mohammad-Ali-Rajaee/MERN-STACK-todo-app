@@ -1,10 +1,32 @@
 const mongoose = require("mongoose");
 const todoModel = require("../model/todoModel");
-const CircularJSON = require("circular-json");
+require("dotenv").config();
+const jwt_decoder = require("jwt-decode");
+const userModel = require("../model/userModel");
+
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header("Authorization").split(" ")[1];
+    const decoded = jwt_decoder(token);
+    const user = await userModel.findOne({ email: decoded.email });
+    console.log(user);
+    if (!user) {
+      throw new Error();
+    }
+
+    req.token = token;
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(401).send({ error: "Please authenticate." });
+  }
+};
 
 const getAllTodos = async (req, res) => {
   try {
-    const allTodos = await todoModel.find();
+    const allTodos = await todoModel
+      .find({ user: req.user._id })
+      .populate("user");
     if (!allTodos) {
       res.status(404).send("No document");
       return;
@@ -39,15 +61,16 @@ const updateTodo = async (req, res) => {
 
 const addTodo = async (req, res) => {
   try {
-    const newTodo = req.body;
-    console.log(newTodo);
-    todoModel.create(newTodo).then((data) => {
-      console.log("added successfully");
-      res.status(200).json(data);
+    const { title, complete } = req.body;
+    const todo = new todoModel({
+      title,
+      complete,
+      user: req.user._id, // Set the user field to the authenticated user's ID
     });
-  } catch (message) {
-    console.log(message);
-    res.status(500).json(message);
+    await todo.save();
+    res.status(201).send(todo);
+  } catch (error) {
+    res.status(400).send(error);
   }
 };
 
@@ -86,4 +109,11 @@ const getTodoById = async (req, res) => {
   }
 };
 
-module.exports = { getAllTodos, deleteTodo, updateTodo, addTodo, getTodoById };
+module.exports = {
+  getAllTodos,
+  deleteTodo,
+  updateTodo,
+  addTodo,
+  getTodoById,
+  auth,
+};
